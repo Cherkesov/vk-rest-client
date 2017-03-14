@@ -1,21 +1,30 @@
 package com.gfb.vk_rest_client;
 
+import com.gfb.vk_rest_client.domain.Hint;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import org.codehaus.jackson.map.ObjectMapper;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 
-/**
- * Created by goforbroke on 02.03.17.
- */
 public class Application {
 
-    public static final String METHOD__SEARCH_GET_HINTS = "search.getHints";
-    public static final String VERSION = "5.62";
+    private static final String METHOD__SEARCH_GET_HINTS = "search.getHints";
+    private static final String VERSION = "5.62";
 
     public static void main(String[] args) {
+
+        /*
+         * https://oauth.vk.com/authorize?client_id=5879268&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=friends,groups&response_type=token&v=5.62&state=123456
+         */
 
         Client client = ClientBuilder.newClient();
         WebTarget target = client
@@ -31,6 +40,21 @@ public class Application {
                 .post(Entity.json(""))
                 ;
 
-        System.out.println(response.readEntity(String.class));
+        String responseContent = response.readEntity(String.class);
+
+        JsonParser parser = new JsonParser();
+        JsonObject mainObject = parser.parse(responseContent).getAsJsonObject();
+        JsonArray pItem = mainObject.getAsJsonArray("response");
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        for (JsonElement row : pItem) {
+            try {
+                Hint user = mapper.readValue(row.toString(), Hint.class);
+                System.out.println(user);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
