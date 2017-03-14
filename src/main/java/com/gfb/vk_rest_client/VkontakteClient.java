@@ -22,11 +22,13 @@ public class VkontakteClient {
 
     private String accessToken;
     private Client client;
+    private JsonParser parser;
     private ObjectMapper mapper;
 
     public VkontakteClient(String accessToken) {
         this.accessToken = accessToken;
         client = ClientBuilder.newClient();
+        parser = new JsonParser();
         mapper = new ObjectMapper();
     }
 
@@ -50,7 +52,10 @@ public class VkontakteClient {
 
         String responseContent = response.readEntity(String.class);
 
-        JsonParser parser = new JsonParser();
+        return deserializeVkResponse(description, responseContent);
+    }
+
+    public Object deserializeVkResponse(AbstractMethodDescription description, String responseContent) {
         JsonObject mainObject = parser.parse(responseContent).getAsJsonObject();
         JsonElement responseItem = mainObject.get("response");
 

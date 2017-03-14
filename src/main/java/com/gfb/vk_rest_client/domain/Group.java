@@ -1,7 +1,11 @@
 package com.gfb.vk_rest_client.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+@JsonIgnoreProperties({
+        "admin_level"
+})
 public class Group {
     @JsonProperty
     private int id;

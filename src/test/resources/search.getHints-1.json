@@ -1,0 +1,41 @@
+{
+  "response": [
+    {
+      "type": "group",
+      "group": {
+        "id": 28551727,
+        "name": "VK API Change Log",
+        "screen_name": "api_updates",
+        "is_closed": 0,
+        "type": "page",
+        "is_admin": 1,
+        "admin_level": 2,
+        "is_member": 1,
+        "photo_50": "https://pp.vk.me/...1727/e_365fbeb5.jpg",
+        "photo_100": "https://pp.vk.me/...1727/d_93b73059.jpg",
+        "photo_200": "https://pp.vk.me/...1727/d_93b73059.jpg"
+      },
+      "section": "groups",
+      "description": "Group, 9,666 members",
+      "global": 1
+    },
+    {
+      "type": "group",
+      "group": {
+        "id": 1,
+        "name": "ВКонтакте API",
+        "screen_name": "apiclub",
+        "is_closed": 0,
+        "type": "group",
+        "is_admin": 1,
+        "admin_level": 3,
+        "is_member": 1,
+        "photo_50": "https://pp.vk.me/...0001/e_5ba03323.jpg",
+        "photo_100": "https://pp.vk.me/...0001/d_7bfe2183.jpg",
+        "photo_200": "https://pp.vk.me/...0001/d_7bfe2183.jpg"
+      },
+      "section": "groups",
+      "description": "Group, 313,148 members"
+    }
+  ]
+}
