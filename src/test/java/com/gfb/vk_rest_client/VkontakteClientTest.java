@@ -22,13 +22,13 @@ public class VkontakteClientTest {
     public void deserializeVkResponse() throws Exception {
         VkontakteClient client = new VkontakteClient(null);
 
-        String everything = readCassete("newsfeed.search-1.json");
-        Object res1 = client.deserializeVkResponse(new SearchDescription("123456"), everything);
+        String json = readCassete("newsfeed.search-1.json");
+        Object resObj = client.deserializeVkResponse(new SearchDescription("123456"), json);
 
-        Assert.assertNotNull(res1);
-        Assert.assertTrue(res1 instanceof NewsfeedItems);
+        Assert.assertNotNull(resObj);
+        Assert.assertTrue(resObj instanceof NewsfeedItems);
         Assert.assertTrue(
-                ((NewsfeedItems) res1).getItems().length > 0
+                ((NewsfeedItems) resObj).getItems().length > 0
         );
     }
 
@@ -36,13 +36,13 @@ public class VkontakteClientTest {
     public void deserializeVkResponse2() throws Exception {
         VkontakteClient client = new VkontakteClient(null);
 
-        String everything = readCassete("search.getHints-1.json");
-        Object res1 = client.deserializeVkResponse(new GetHintsDescription("123456", 0), everything);
+        String json = readCassete("search.getHints-1.json");
+        Object resObj = client.deserializeVkResponse(new GetHintsDescription("123456", 0), json);
 
-        Assert.assertNotNull(res1);
-        Assert.assertTrue(res1 instanceof Hint[]);
+        Assert.assertNotNull(resObj);
+        Assert.assertTrue(resObj instanceof Hint[]);
         Assert.assertTrue(
-                ((Hint[]) res1).length > 0
+                ((Hint[]) resObj).length > 0
         );
     }
 
@@ -51,7 +51,7 @@ public class VkontakteClientTest {
         ClassLoader classLoader = VkontakteClientTest.class.getClassLoader();
         File file = new File(classLoader.getResource(fileName).getFile());
 
-        String everything;
+        String result;
         BufferedReader br = new BufferedReader(new FileReader(file));
         try {
             StringBuilder sb = new StringBuilder();
@@ -61,11 +61,11 @@ public class VkontakteClientTest {
                 sb.append(line).append("\n");
                 line = br.readLine();
             }
-            everything = sb.toString();
+            result = sb.toString();
         } finally {
             br.close();
         }
-        return everything;
+        return result;
     }
 
 }
