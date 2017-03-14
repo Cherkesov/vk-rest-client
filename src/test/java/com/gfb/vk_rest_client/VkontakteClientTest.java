@@ -1,11 +1,14 @@
 package com.gfb.vk_rest_client;
 
 import com.gfb.vk_rest_client.description.newsfeed.SearchDescription;
+import com.gfb.vk_rest_client.description.photos.GetAlbumDescription;
 import com.gfb.vk_rest_client.description.search.GetHintsDescription;
+import com.gfb.vk_rest_client.domain.AlbumPhotos;
 import com.gfb.vk_rest_client.domain.Hint;
 import com.gfb.vk_rest_client.domain.NewsfeedItems;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -17,6 +20,13 @@ import java.lang.reflect.Array;
 import static org.junit.Assert.*;
 
 public class VkontakteClientTest {
+
+    private VkontakteClient client;
+
+    @Before
+    public void init() {
+        client = new VkontakteClient(null);
+    }
 
     @Test
     public void deserializeVkResponse() throws Exception {
@@ -43,6 +53,18 @@ public class VkontakteClientTest {
         Assert.assertTrue(resObj instanceof Hint[]);
         Assert.assertTrue(
                 ((Hint[]) resObj).length > 0
+        );
+    }
+
+    @Test
+    public void deserializeVkResponse__photos_get() throws Exception {
+        String json = readCassete("photos.get-1.json");
+        Object resObj = client.deserializeVkResponse(new GetAlbumDescription(0, 0), json);
+
+        Assert.assertNotNull(resObj);
+        Assert.assertTrue(resObj instanceof AlbumPhotos);
+        Assert.assertTrue(
+                ((AlbumPhotos) resObj).getItems().length > 0
         );
     }
 
