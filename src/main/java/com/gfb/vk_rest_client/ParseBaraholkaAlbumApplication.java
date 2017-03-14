@@ -4,12 +4,15 @@ import com.gfb.vk_rest_client.description.photos.GetAlbumDescription;
 import com.gfb.vk_rest_client.domain.AlbumPhotos;
 import com.gfb.vk_rest_client.domain.Photo;
 
+import java.awt.*;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Date;
 
 public class ParseBaraholkaAlbumApplication {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, URISyntaxException {
         VkontakteClient client = new VkontakteClient(args[0]);
 
         AlbumPhotos albumPhotos = (AlbumPhotos) client.exec(new GetAlbumDescription(
@@ -34,7 +37,11 @@ public class ParseBaraholkaAlbumApplication {
 
         write(fileName, "</body></html>");
 
-        System.out.println();
+        if (Desktop.isDesktopSupported()) {
+            Desktop.getDesktop().browse(new URI("file://" + fileName));
+//            System.exit(0);
+            // TODO: can't stop programm automaticaly if browser opened
+        }
     }
 
     private static int relevantLevel(Photo photo, String[] keywords) {
